@@ -115,34 +115,35 @@ def get_thread_items(soup):
             number = span.get_text(strip=True)
             print(f"[+] Number of items: {number}")
 
-    b_tags = ul_element.find_all('b')
+        b_tags = ul_element.find_all('b')
 
-    i = 0
+        i = 0
 
-    for b_tag in b_tags:
-        type_ = b_tag.get_text(strip=True)
+        for b_tag in b_tags:
+            type_ = b_tag.get_text(strip=True)
 
-        next_sibling = b_tag.next_sibling
-        while next_sibling and next_sibling.name != 'br':
-            if next_sibling.name == 'span' and 'text-success' in next_sibling.get('class', []):
-                id_ = next_sibling.get_text(strip=True)
+            next_sibling = b_tag.next_sibling
+            while next_sibling and next_sibling.name != 'br':
+                if next_sibling.name == 'span' and 'text-success' in next_sibling.get('class', []):
+                    id_ = next_sibling.get_text(strip=True)
+                    break
+                next_sibling = next_sibling.next_sibling
+            else:
+                text = b_tag.next_sibling.strip()
+                id_ = text.split(' ')[1]
+
+            a_tag = b_tag.find_next('a')
+            link = a_tag['href'] if a_tag else None
+            link_text = a_tag.get_text(strip=True)
+
+            # scraped_data.append({'type': type_, 'id': id_, 'link': link, 'link_text': link_text})
+
+            print(f"[{i+1}] Type: {type_}, Title: {link_text}, ID: {id_}, Link: {link}")
+            i += 1
+            if i >= 100:
+                print(f"[-] Too many items to display, only displayed first 100 items")
                 break
-            next_sibling = next_sibling.next_sibling
-        else:
-            text = b_tag.next_sibling.strip()
-            id_ = text.split(' ')[1]
 
-        a_tag = b_tag.find_next('a')
-        link = a_tag['href'] if a_tag else None
-        link_text = a_tag.get_text(strip=True)
-
-        # scraped_data.append({'type': type_, 'id': id_, 'link': link, 'link_text': link_text})
-
-        print(f"[{i+1}] Type: {type_}, Title: {link_text}, ID: {id_}, Link: {link}")
-        i += 1
-        if i >= 100:
-            print(f"[-] Too many items to display, only displayed first 100 items")
-            break
 
 def comment(thread):
     url = "https://70games.net/post-create-" + thread + "-1.htm"
