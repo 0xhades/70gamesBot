@@ -169,7 +169,7 @@ def comment(thread):
         'doctype': '1',
         'return_html': '1',
         'quotepid': '0',
-        'sid': 'uuuuis6trktbuhre1u3c7fsnbv',
+        'sid': cookies["bbs_sid"],
         'message': 'thanks+!+dude'
     }
 
