@@ -11,7 +11,9 @@ cookies = {
 def get_threads(page):
     
     page = abs(math.floor(page))
-    url = "https://70games.net/index-" + str(page) + ".htm"
+    url = "https://70games.net/forum-1.htm"
+    if page != 0:       
+        url = "https://70games.net/forum-1-" + str(page + 1) + ".htm?orderby=lastpid&digest=0"
 
     headers = {
         'Host': '70games.net',
