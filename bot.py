@@ -11,9 +11,7 @@ cookies = {
 def get_threads(page):
     
     page = abs(math.floor(page))
-    url = "https://70games.net/forum-1.htm"
-    if page != 0:       
-        url = "https://70games.net/forum-1-" + str(page + 1) + ".htm?orderby=lastpid&digest=0"
+    url = "https://70games.net/index-" + str(page) + ".htm"
 
     headers = {
         'Host': '70games.net',
@@ -142,6 +140,7 @@ def get_thread_items(soup):
         i += 1
         if i >= 100:
             print(f"[-] Too many items to display, only displayed first 100 items")
+            break
 
 def comment(thread):
     url = "https://70games.net/post-create-" + thread + "-1.htm"
